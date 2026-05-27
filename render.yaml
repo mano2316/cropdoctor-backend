@@ -1,0 +1,28 @@
+services:
+  - type: web
+    name: cropdoctor-api
+    runtime: docker
+    plan: free
+    healthCheckPath: /health
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: cropdoctor-db
+          property: connectionString
+      - key: SECRET_KEY
+        generateValue: true
+      - key: ALGORITHM
+        value: HS256
+      - key: ACCESS_TOKEN_EXPIRE_MINUTES
+        value: "1440"
+      - key: ANTHROPIC_API_KEY
+        value: your-anthropic-api-key
+      - key: DEBUG
+        value: "False"
+      - key: UPLOAD_DIR
+        value: uploads
+
+databases:
+  - name: cropdoctor-db
+    plan: free
+    databaseName: cropdoctor
