@@ -54,6 +54,9 @@ class DiagnosisResult(BaseModel):
     cause: str = ""
     treatment: List[str] = []
     prevention: str = ""
+    spray_recommendation: str = ""
+    soil_fertilizer: str = ""
+    organic_alternative: str = ""
 
 
 class ScanResponse(BaseModel):
@@ -69,6 +72,9 @@ class ScanResponse(BaseModel):
     cause: Optional[str] = None
     treatment: Optional[List[str]] = None
     prevention: Optional[str] = None
+    spray_recommendation: Optional[str] = None
+    soil_fertilizer: Optional[str] = None
+    organic_alternative: Optional[str] = None
     created_at: datetime
 
     class Config:

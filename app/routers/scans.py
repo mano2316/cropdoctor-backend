@@ -77,6 +77,9 @@ async def analyze_scan(
         cause=diagnosis.cause,
         treatment=diagnosis.treatment,
         prevention=diagnosis.prevention,
+        spray_recommendation=diagnosis.spray_recommendation,
+        soil_fertilizer=diagnosis.soil_fertilizer,
+        organic_alternative=diagnosis.organic_alternative,
     )
     db.add(scan)
 

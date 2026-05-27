@@ -45,6 +45,9 @@ class Scan(Base):
     cause = Column(Text, nullable=True)
     treatment = Column(JSON, nullable=True)  # List of treatment strings
     prevention = Column(Text, nullable=True)
+    spray_recommendation = Column(Text, nullable=True)
+    soil_fertilizer = Column(Text, nullable=True)
+    organic_alternative = Column(Text, nullable=True)
     created_at = Column(DateTime, default=datetime.utcnow)
 
     # Relationships

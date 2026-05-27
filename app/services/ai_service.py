@@ -45,7 +45,10 @@ Respond ONLY with valid JSON (no markdown, no code blocks):
   "symptoms": "Detailed 2-3 sentence description of observed symptoms",
   "cause": "Primary pathogen, nutrient cause, or pest responsible",
   "treatment": ["Treatment step 1", "Treatment step 2", "Treatment step 3"],
-  "prevention": "Prevention strategies in 2-3 sentences"
+  "prevention": "Prevention strategies in 2-3 sentences",
+  "spray_recommendation": "Specific pesticide or fungicide spray with exact dosage per liter of water and frequency. Example: Spray Mancozeb 75% WP at 2.5g/L water, repeat every 10 days for 3 applications.",
+  "soil_fertilizer": "Specific fertilizer to apply to soil for plant recovery and growth. Example: Apply DAP 50kg/acre + Zinc Sulphate 5kg/acre as basal dose. Top-dress with Urea 25kg/acre after 15 days.",
+  "organic_alternative": "Organic/natural spray and soil treatment alternative. Example: Spray Pseudomonas fluorescens 10g/L water + apply Jeevamrutha 200L/acre to soil for microbial recovery."
 }}"""
 
     try:
@@ -64,14 +67,17 @@ Respond ONLY with valid JSON (no markdown, no code blocks):
                     "Remove and destroy heavily infected leaves.",
                     "Avoid overhead irrigation to prevent bacterial spread."
                 ],
-                prevention="Use resistant crop varieties and ensure proper spacing for air circulation."
+                prevention="Use resistant crop varieties and ensure proper spacing for air circulation.",
+                spray_recommendation=f"Spray Copper Oxychloride 50% WP at 3g/L water on affected {crop_type} plants. Repeat every 7-10 days for 3 sprays. Alternatively, spray Streptomycin Sulphate at 0.5g/L water for severe bacterial infections.",
+                soil_fertilizer=f"Apply DAP (Di-Ammonium Phosphate) 50kg/acre as basal dose for root recovery. Top-dress with Urea 25kg/acre split into 2 doses at 15-day intervals. Add Zinc Sulphate 10kg/acre mixed with sand for micronutrient support.",
+                organic_alternative=f"Spray Pseudomonas fluorescens bio-fungicide at 10g/L water every 7 days. Apply Jeevamrutha 200L/acre to soil for beneficial microbial recovery. Use Neem Oil 5ml/L as preventive foliar spray. Apply Panchagavya 3% solution as growth booster."
             )
 
         client = anthropic.Anthropic(api_key=settings.ANTHROPIC_API_KEY)
 
         message = client.messages.create(
             model="claude-3-5-sonnet-20241022",
-            max_tokens=1024,
+            max_tokens=1500,
             messages=[
                 {
                     "role": "user",
@@ -113,6 +119,9 @@ Respond ONLY with valid JSON (no markdown, no code blocks):
             cause=result_data.get("cause", ""),
             treatment=result_data.get("treatment", []),
             prevention=result_data.get("prevention", ""),
+            spray_recommendation=result_data.get("spray_recommendation", ""),
+            soil_fertilizer=result_data.get("soil_fertilizer", ""),
+            organic_alternative=result_data.get("organic_alternative", ""),
         )
 
     except json.JSONDecodeError:
