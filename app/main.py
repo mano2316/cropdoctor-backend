@@ -4,7 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from .config import settings
 from .database import engine, Base
-from .routers import auth, scans, fields
+from .routers import auth, scans, fields, mandi
 
 # Create tables
 Base.metadata.create_all(bind=engine)
@@ -37,6 +37,7 @@ app.mount("/uploads", StaticFiles(directory=settings.UPLOAD_DIR), name="uploads"
 app.include_router(auth.router)
 app.include_router(scans.router)
 app.include_router(fields.router)
+app.include_router(mandi.router)
 
 
 @app.get("/", tags=["Root"])
